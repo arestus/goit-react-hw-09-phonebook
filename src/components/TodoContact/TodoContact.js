@@ -7,13 +7,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-// const mapDispatchToProps = dispatch => ({
-//   onSubmit: (name, number) =>
-//     dispatch(contactsOperations.addContact(name, number)),
-// });
-
-// export default connect(null, mapDispatchToProps)(TodoContact);
-
 export default function TodoContact() {
   const dispatch = useDispatch();
   const [contact, setContact] = useState({
