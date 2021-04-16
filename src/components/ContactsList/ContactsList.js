@@ -14,23 +14,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Container } from '@material-ui/core';
 
 const ContactsList = ({ contacts, onDeleteContact }) => (
-  // <ul className={s.contacts}>
   <Container>
     <List className={s.ContactsList}>
       {contacts.map(({ id, name, number }) => (
         <ListItem className={s.Contact} key={id}>
-          {/* // <li className={s.listItem} key={id}> */}
           <PhoneIcon className={s.PhoneIcon} />
           <p className={s.ContactName}>
             {name}: {number}
           </p>
-          {/* <button
-          type="button"
-          className={s.button}
-          onClick={() => onDeleteContact(id)}
-        >
-          Удалить
-        </button> */}
           <IconButton
             edge="end"
             type="button"
@@ -40,11 +31,9 @@ const ContactsList = ({ contacts, onDeleteContact }) => (
             <DeleteIcon />
           </IconButton>
         </ListItem>
-        // {/* </li>  */}
       ))}
     </List>
   </Container>
-  // {/* </ul> */}
 );
 
 ContactsList.propTypes = {

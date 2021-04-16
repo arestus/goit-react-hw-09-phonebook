@@ -28,8 +28,8 @@ const fetchContacts = () => async dispatch => {
   //   .catch(error => dispatch(fetchContactError(error)));
 };
 
-const addContact = (name, number) => async dispatch => {
-  const contact = { name, number };
+const addContact = contact => async dispatch => {
+  // const contact = { name, number };
   dispatch(addContactRequest());
 
   try {

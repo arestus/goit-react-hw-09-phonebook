@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { authSelectors } from '../redux/auth';
 
 import Button from '@material-ui/core/Button';
@@ -18,31 +18,34 @@ const styles = {
   },
 };
 
-const Navigation = ({ isAuthenticated }) => (
-  <nav>
-    <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
-      <Button variant="contained" color="primary">
-        Главная
-      </Button>
-    </NavLink>
+// const mapStateToProps = state => ({
+//   isLoggedIn: authSelectors.getIsAuthenticated(state),
+// });
 
-    {isAuthenticated && (
-      <NavLink
-        to="/contacts"
-        exact
-        style={styles.link}
-        activeStyle={styles.activeLink}
-      >
+// export default connect(mapStateToProps)(Navigation);
+
+export default function Navigation() {
+  const isLoggedIn = useSelector(authSelectors.getIsAuthenticated);
+  return (
+    <nav>
+      <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
         <Button variant="contained" color="primary">
-          Контакты
+          Главная
         </Button>
       </NavLink>
-    )}
-  </nav>
-);
 
-const mapStateToProps = state => ({
-  isAuthenticated: authSelectors.getIsAuthenticated(state),
-});
-
-export default connect(mapStateToProps)(Navigation);
+      {isLoggedIn && (
+        <NavLink
+          to="/contacts"
+          exact
+          style={styles.link}
+          activeStyle={styles.activeLink}
+        >
+          <Button variant="contained" color="primary">
+            Контакты
+          </Button>
+        </NavLink>
+      )}
+    </nav>
+  );
+}

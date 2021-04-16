@@ -1,28 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import TodoContact from '../components/TodoContact';
 import ContactsList from '../components/ContactsList';
 import Filter from '../components/Filter';
 import { contactsOperations } from '../redux/contacts';
 
-class ContactsView extends Component {
-  componentDidMount() {
-    this.props.fetchContacts();
-  }
+export default function ContactsView() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(contactsOperations.fetchContacts());
+  }, [dispatch]);
 
-  render() {
-    return (
-      <>
-        <TodoContact />
-        <Filter />
-        <ContactsList />
-      </>
-    );
-  }
+  return (
+    <>
+      <TodoContact />
+      <Filter />
+      <ContactsList />
+    </>
+  );
 }
-
-const mapDispatchToProps = dispatch => ({
-  fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
-});
-
-export default connect(null, mapDispatchToProps)(ContactsView);
