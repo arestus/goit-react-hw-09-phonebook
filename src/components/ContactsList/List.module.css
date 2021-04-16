@@ -1,0 +1,39 @@
+.contacts {
+  list-style-type: none;
+}
+.ContactsList {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 24px;
+}
+
+.listItem {
+  font-family: 'Josefin Slab', serif;
+  align-items: baseline;
+  display: flex;
+  width: 300px;
+}
+.button {
+  margin-left: 5px;
+  cursor: pointer;
+  height: 20px;
+}
+.button:hover {
+  background-color: red;
+  border: 2px solid black;
+}
+.PhoneIcon {
+  margin-right: 10px;
+}
+.ContactName {
+  font-size: 16px;
+}
+.Contact {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 3px solid #3f51b5;
+  border-radius: 4px;
+}
