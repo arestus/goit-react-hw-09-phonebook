@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { authOperations } from '../redux/auth';
-
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-// import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -21,105 +18,71 @@ const styles = {
   },
 };
 
-class LoginView extends Component {
-  state = {
-    email: '',
-    password: '',
-  };
+export default function LoginView() {
+  const [user, setUser] = useState({ email: '', password: '' });
 
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
-  };
+  const dispatch = useDispatch();
 
-  handleSubmit = e => {
-    e.preventDefault();
+  const handleChange = useCallback(
+    ({ target: { name, value } }) => {
+      setUser({ ...user, [name]: value });
+    },
+    [user],
+  );
 
-    this.props.onLogin(this.state);
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
 
-    this.setState({ name: '', email: '', password: '' });
-  };
+      dispatch(authOperations.logIn(user));
 
-  render() {
-    const { email, password } = this.state;
+      setUser({ email: '', password: '' });
+    },
+    [dispatch, user],
+  );
 
-    return (
-      <div>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <h1>Страница логина</h1>
+  return (
+    <div>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <h1>Страница логина</h1>
 
-          <form
-            onSubmit={this.handleSubmit}
-            style={styles.form}
-            autoComplete="off"
-          >
-            <Typography component="h1" variant="h5">
-              Вход
-            </Typography>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="E-mail"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={this.handleChange}
-            />
-            {/* <label style={styles.label}>
-              Почта
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={this.handleChange}
-              />
-            </label> */}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              label="Пароль"
-              name="password"
-              autoComplete="current-password"
-              type="password"
-              autoFocus
-              vvalue={password}
-              onChange={this.handleChange}
-            />
-            {/* <label style={styles.label}>
-              Пароль
-              <input
-                type="password"
-                name="password"
-                value={password}
-                onChange={this.handleChange}
-              />
-            </label> */}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              // className={classes.submit}
-            >
-              Войти
-            </Button>
-            {/* <button type="submit">Войти</button> */}
-          </form>
-        </Container>
-      </div>
-    );
-  }
+        <form onSubmit={handleSubmit} style={styles.form} autoComplete="off">
+          <Typography component="h1" variant="h5">
+            Вход
+          </Typography>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="E-mail"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={user.email}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="Пароль"
+            name="password"
+            autoComplete="current-password"
+            type="password"
+            autoFocus
+            value={user.password}
+            onChange={handleChange}
+          />
+          <Button type="submit" fullWidth variant="contained" color="primary">
+            Войти
+          </Button>
+        </form>
+      </Container>
+    </div>
+  );
 }
-
-const mapDispatchToProps = {
-  onLogin: authOperations.logIn,
-};
-
-export default connect(null, mapDispatchToProps)(LoginView);
